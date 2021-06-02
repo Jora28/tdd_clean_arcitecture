@@ -1,6 +1,7 @@
+import 'package:mocktail/mocktail.dart';
 import 'package:tdd_pattern/core/usecases/usecase.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/entities/number_trivia.dart';
-import 'package:mockito/mockito.dart';
+//import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/repositories/number_trivia_repositories.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,11 +20,11 @@ void main() {
   //final tNumber = 1;
   final tNumberTrivia = NumberTrivia(number: 1, text: "text");
   test('should get trivia  from the repository', () async {
-    when(mocknumberTriviaRepository?.getRandomNumberTrivia())
+    when(()=>mocknumberTriviaRepository?.getRandomNumberTrivia())
         .thenAnswer((_) async => Right(tNumberTrivia));
     final result = await usecase!(NoParams());
     expect(result, Right(tNumberTrivia));
-    verify(mocknumberTriviaRepository?.getRandomNumberTrivia());
+    verify(()=>mocknumberTriviaRepository?.getRandomNumberTrivia());
     verifyNoMoreInteractions(mocknumberTriviaRepository);
   });
 }

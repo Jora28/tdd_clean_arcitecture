@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tdd_pattern/core/error/exceptions.dart';
 import 'package:tdd_pattern/core/network/noetwork_info.dart';
-import 'package:tdd_pattern/features/nuber_triviva/data/datasoursces/number_trivia__remote_data_sourse.dart';
+import 'package:tdd_pattern/features/nuber_triviva/data/datasoursces/number_trivia_remote_data_sourse.dart';
 import 'package:tdd_pattern/features/nuber_triviva/data/datasoursces/number_trivia_local_data_source.dart';
 import 'package:tdd_pattern/features/nuber_triviva/data/models/number_trivia_model.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/entities/number_trivia.dart';
