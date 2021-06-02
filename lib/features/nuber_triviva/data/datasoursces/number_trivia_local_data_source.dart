@@ -6,7 +6,7 @@ import 'package:tdd_pattern/features/nuber_triviva/data/models/number_trivia_mod
 
 abstract class NumberTriviaLocalDataSourse {
   Future<NumberTriviaModel?>? getLastNumberTrivia();
-  Future<void>? cachenumbertrivia(NumberTriviaModel? numberTriviaModel);
+  Future<bool>? cachenumbertrivia(NumberTriviaModel? numberTriviaModel);
 }
 
 const CACHED_NUMBER_TRIVIA = "CACHED_NUMBER_TRIVIA";
@@ -14,8 +14,14 @@ const CACHED_NUMBER_TRIVIA = "CACHED_NUMBER_TRIVIA";
 class NumberTriviaLocalDataSourseImpl implements NumberTriviaLocalDataSourse {
   final SharedPreferences? sharedPreferences;
   NumberTriviaLocalDataSourseImpl({this.sharedPreferences});
+
+  /// it is not working  
+  /// look file in folder [test], file [number_trivia_local_data_sourse_test.dart]
   @override
-  Future<void>? cachenumbertrivia(NumberTriviaModel? numberTriviaModel) {}
+  Future<bool>? cachenumbertrivia(NumberTriviaModel? numberTriviaModel) {
+    return  sharedPreferences?.setString(
+        CACHED_NUMBER_TRIVIA, json.encode(numberTriviaModel?.toJson()));
+  }
 
   @override
   Future<NumberTriviaModel?>? getLastNumberTrivia() async {
