@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:tdd_pattern/core/error/faailures.dart';
+import 'package:tdd_pattern/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:tdd_pattern/core/usecases/usecase.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/entities/number_trivia.dart';

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:tdd_pattern/core/error/faailures.dart';
+import 'package:tdd_pattern/core/error/failure.dart';
 import 'package:tdd_pattern/core/usecases/usecase.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/entities/number_trivia.dart';
 import 'package:tdd_pattern/features/nuber_triviva/domain/repositories/number_trivia_repositories.dart';
