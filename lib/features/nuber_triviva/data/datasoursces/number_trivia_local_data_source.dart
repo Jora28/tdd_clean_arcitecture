@@ -15,12 +15,16 @@ class NumberTriviaLocalDataSourseImpl implements NumberTriviaLocalDataSourse {
   final SharedPreferences? sharedPreferences;
   NumberTriviaLocalDataSourseImpl({this.sharedPreferences});
 
-  /// it is not working  
+  /// it is not working
   /// look file in folder [test], file [number_trivia_local_data_sourse_test.dart]
   @override
   Future<bool>? cachenumbertrivia(NumberTriviaModel? numberTriviaModel) {
-    return  sharedPreferences?.setString(
-        CACHED_NUMBER_TRIVIA, json.encode(numberTriviaModel?.toJson()));
+    try {
+      sharedPreferences?.setString(
+          CACHED_NUMBER_TRIVIA, json.encode(numberTriviaModel?.toJson()));
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override

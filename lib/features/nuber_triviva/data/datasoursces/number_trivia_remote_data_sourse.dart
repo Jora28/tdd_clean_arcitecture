@@ -1,6 +1,8 @@
+import 'dart:convert';
+
+import 'package:tdd_pattern/core/error/exceptions.dart';
 import 'package:tdd_pattern/features/nuber_triviva/data/models/number_trivia_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 abstract class NumberTriviaRemoteDataSourse {
   Future<NumberTriviaModel?>? getConcretNuberTivia(int? number);
@@ -8,12 +10,18 @@ abstract class NumberTriviaRemoteDataSourse {
 }
 
 class NumberTriviaRemoteDataSourseImpl implements NumberTriviaRemoteDataSourse {
-  final http.Client? client;
-  NumberTriviaRemoteDataSourseImpl({@required this.client});
+  final http.Client client;
+  NumberTriviaRemoteDataSourseImpl({required this.client});
   @override
-  Future<NumberTriviaModel?>? getConcretNuberTivia(int? number) {
-    Uri url = Uri.parse('http://numbersapi.com/$number');
-    //client?.get(url, headers: {'Content-Type': 'application/json'});
+  Future<NumberTriviaModel?>? getConcretNuberTivia(int? number) async {
+    final response = await client.get(
+        Uri.parse('http://numbersapi.com/$number'),
+        headers: {'Content-Type': "application/json"});
+    if (response.statusCode == 200) {
+      return NumberTriviaModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
   }
 
   @override

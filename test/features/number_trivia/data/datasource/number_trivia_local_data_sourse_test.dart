@@ -48,14 +48,14 @@ void main() {
     /// [setString] in sherdPref not support nullSefty
 
 
-  // group("cacheNumberTrivia", () {
-  //   final tNumberTriviaModel =
-  //       NumberTriviaModel(text: "Test Trivia", number: 1);
-  //   test("should call SharedPreferences to cache the data", () async {
-  //     dataSourseImpl?.cachenumbertrivia(tNumberTriviaModel);
-  //     final expactedJsonString = json.encode(tNumberTriviaModel.toJson());
-  //     verify(() => mockSharedPreferences?.setString(
-  //         CACHED_NUMBER_TRIVIA, expactedJsonString));
-  //   });
-  // });
+  group("cacheNumberTrivia", () {
+    final tNumberTriviaModel =
+        NumberTriviaModel(text: "Test Trivia", number: 1);
+    test("should call SharedPreferences to cache the data", () async {
+      dataSourseImpl?.cachenumbertrivia(tNumberTriviaModel);
+      final expactedJsonString = json.encode(tNumberTriviaModel.toJson());
+      verify(() => mockSharedPreferences?.setString(
+          CACHED_NUMBER_TRIVIA, expactedJsonString));
+    });
+  });
 }
