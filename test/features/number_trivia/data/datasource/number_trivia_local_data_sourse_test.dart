@@ -13,8 +13,8 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 const CACHED_NUMBER_TRIVIA = "CACHED_NUMBER_TRIVIA";
 void main() {
-  NumberTriviaLocalDataSourseImpl? dataSourseImpl;
-  MockSharedPreferences? mockSharedPreferences;
+  late NumberTriviaLocalDataSourseImpl dataSourseImpl;
+  late MockSharedPreferences mockSharedPreferences;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
@@ -28,17 +28,17 @@ void main() {
     test(
         "should return NumberTrivia from Sharedpreferens when ther is onew the cached",
         () async {
-      when(() => mockSharedPreferences?.getString(any()))
+      when(() => mockSharedPreferences.getString(any()))
           .thenReturn(fixture("trivia_cached.json"));
-      final result = await dataSourseImpl?.getLastNumberTrivia();
-      verify(() => mockSharedPreferences?.getString(CACHED_NUMBER_TRIVIA));
+      final result = await dataSourseImpl.getLastNumberTrivia();
+      verify(() => mockSharedPreferences.getString(CACHED_NUMBER_TRIVIA));
       expect(result, equals(tNumberTriviaModel));
     });
 
     test("should trow a CatchExeption when there is not a cached value",
         () async {
-      when(() => mockSharedPreferences?.getString(any())).thenReturn(null);
-      final call = dataSourseImpl?.getLastNumberTrivia();
+      when(() => mockSharedPreferences.getString(any())).thenReturn(null);
+      final call = dataSourseImpl.getLastNumberTrivia();
       expect(() async => await call, throwsA(TypeMatcher<CacheExceptions>()));
     });
   });
@@ -52,9 +52,9 @@ void main() {
     final tNumberTriviaModel =
         NumberTriviaModel(text: "Test Trivia", number: 1);
     test("should call SharedPreferences to cache the data", () async {
-      dataSourseImpl?.cachenumbertrivia(tNumberTriviaModel);
+      dataSourseImpl.cachenumbertrivia(tNumberTriviaModel);
       final expactedJsonString = json.encode(tNumberTriviaModel.toJson());
-      verify(() => mockSharedPreferences?.setString(
+      verify(() => mockSharedPreferences.setString(
           CACHED_NUMBER_TRIVIA, expactedJsonString));
     });
   });

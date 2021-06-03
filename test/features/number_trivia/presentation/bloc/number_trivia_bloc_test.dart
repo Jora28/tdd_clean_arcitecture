@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -16,10 +15,10 @@ class MockGetRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
 class MockInputConverter extends Mock implements InputConverter {}
 
 void main() {
-  NumberTriviaBloc? bloc;
-  MockGetConcreateNumberTrivia? mockGetConcreateNumberTrivia;
-  MockGetRandomNumberTrivia? mockGetRandomNumberTrivia;
-  MockInputConverter? mockInputConverter;
+  late NumberTriviaBloc bloc;
+  late MockGetConcreateNumberTrivia mockGetConcreateNumberTrivia;
+  late MockGetRandomNumberTrivia mockGetRandomNumberTrivia;
+  late MockInputConverter mockInputConverter;
 
   setUp(() {
     mockGetRandomNumberTrivia = MockGetRandomNumberTrivia();
@@ -32,7 +31,7 @@ void main() {
   });
 
   test("inital should be Empty", () {
-    expect(bloc?.initialState, Empty());
+    expect(bloc.initialState, Empty());
   });
   group("GetTriviaForConcretenumber", () {
     final tNumberString = "1";
@@ -41,11 +40,10 @@ void main() {
     test(
         "should call the InputConverter to validate and conver the string to an unsigned integer",
         () async {
-      when(() => mockInputConverter?.stringToUnsignedInteger(any()))
+      when(() => mockInputConverter.stringToUnsignedInteger(any()))
           .thenReturn(Right(tNumberParsed));
-      bloc?.mapEventToState(GetTriviaForConcretNumber(tNumberString));
-      verifyNever(
-          () => mockInputConverter?.stringToUnsignedInteger(tNumberString));
+      bloc.add(GetTriviaForConcretNumber(tNumberString));
+      verify(() => mockInputConverter.stringToUnsignedInteger(tNumberString));
     });
   });
 }
