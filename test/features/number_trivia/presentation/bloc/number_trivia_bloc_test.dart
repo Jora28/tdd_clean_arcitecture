@@ -24,10 +24,8 @@ void main() {
     mockGetRandomNumberTrivia = MockGetRandomNumberTrivia();
     mockGetConcreateNumberTrivia = MockGetConcreateNumberTrivia();
     mockInputConverter = MockInputConverter();
-    bloc = NumberTriviaBloc(
-        getConcreteNumberTrivia: mockGetConcreateNumberTrivia,
-        getRandomNumberTrivia: mockGetRandomNumberTrivia,
-        inputConverter: mockInputConverter);
+    bloc = NumberTriviaBloc(mockGetConcreateNumberTrivia,
+        mockGetRandomNumberTrivia, mockInputConverter);
   });
 
   test("inital should be Empty", () {
@@ -43,7 +41,26 @@ void main() {
       when(() => mockInputConverter.stringToUnsignedInteger(any()))
           .thenReturn(Right(tNumberParsed));
       bloc.add(GetTriviaForConcretNumber(tNumberString));
+      await untilCalled(
+          () => mockInputConverter.stringToUnsignedInteger(any()));
       verify(() => mockInputConverter.stringToUnsignedInteger(tNumberString));
     });
+    test('should emit[Error] when input is infalid', () async {
+      when(() => mockInputConverter.stringToUnsignedInteger(any()))
+          .thenReturn(Left(InvalidInputFailure()));
+      final expacted = [Empty(), Error(message: INVALID_INPUT_FAILURE_MESSAGE)];
+      expectLater(bloc.state, emitsInOrder(expacted));
+      bloc.add(GetTriviaForConcretNumber(tNumberString));
+    });
+
+    test('should get data from the concrete use case ', () async {
+      when(() => mockInputConverter.stringToUnsignedInteger(any()))
+          .thenReturn(Right(tNumberParsed));
+      when(() => mockGetConcreateNumberTrivia(any()))
+          .thenAnswer((_) async => Right(tNumberTrivia));
+     //bloc.add(GetTriviaForConcretNumber(any()));
+      await untilCalled(() => mockGetConcreateNumberTrivia(any()));
+     verify(() => mockGetConcreateNumberTrivia(Params(number: tNumberParsed,)));
+    },timeout: Timeout(Duration(seconds: 1)));
   });
 }

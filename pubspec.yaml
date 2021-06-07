@@ -30,7 +30,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito: ^5.0.9
+  # mockito: ^5.0.9
   mocktail: ^0.1.4
 
 flutter:
